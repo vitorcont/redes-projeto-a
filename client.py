@@ -5,8 +5,10 @@ import pytz
 
 port_aux = False
 
-ip = sys.argv[1]
-port = int(sys.argv[2])
+print('DIGITE O IP DO SERVER: ')
+ip = input()
+print('DIGITE A PORTA: ')
+port = int(input())
 
 udp = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 destiny = (ip, port)
@@ -14,6 +16,8 @@ destiny = (ip, port)
 tz_SP = pytz.timezone('America/Sao_Paulo')
 datetime_SP = datetime.now(tz_SP)
 
+print('CONECTADO AO CHAT!')
+print('ENVIE SUA MENSAGEM!\n')
 while True:
     msg = input()
     current_time = datetime_SP.strftime("%H:%M:%S")
@@ -27,13 +31,14 @@ while True:
         'Mensagem': msg
     }
     udp.sendto(bytes(str(json), "utf8"), destiny)
-
     port_aux = True
 
-    msg_recv, end_client = udp.recvfrom(1024)
+    # Ack
+    msg_recv_ack, end_client_ack = udp.recvfrom(1024)
+    print(f"Ack {end_client_ack}: ", msg_recv_ack.decode('utf-8'), '\n')
+
     # Timestamp de recebimento
-    current_time = datetime_SP.strftime("%H:%M:%S")
-    print("Recebi = ", msg_recv, " , Do cliente",
-          end_client, ' Timestamp Resposta: ', current_time)
+    msg_recv, end_client = udp.recvfrom(1024)
+    print(f"Server {end_client}: ", msg_recv.decode('utf-8'))
 
 udp.close()
