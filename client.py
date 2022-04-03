@@ -21,12 +21,12 @@ while True:
     json = {
         'Ip_Origem': socket.gethostbyname(socket.gethostname()),
         'Ip_Destino': ip,
-        'Porta_Origem': udp.getsockname()[1] if port_aux = False else 8080,
+        'Porta_Origem': udp.getsockname()[1] if port_aux == False else 8080,
         'Porta_Destino': port,
-        'Timestamp': current_time
+        'Timestamp': current_time,
         'Mensagem': msg
     }
-    udp.sendto(bytes(msg, "utf8"), destiny)
+    udp.sendto(bytes(str(json), "utf8"), destiny)
 
     port_aux = True
 
