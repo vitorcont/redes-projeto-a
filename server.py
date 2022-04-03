@@ -19,7 +19,7 @@ while True:
     msg_recv, end_client = udp.recvfrom(1024)
     # Timestamp de recebimento
     current_time = datetime_SP.strftime("%H:%M:%S")
-    print(f"Client {end_client}: ", msg_recv.decode('utf-8'), current_time)
+    print(f"Client {end_client}: ", msg_recv.decode('utf-8'), ' Timestamp Resposta: ', current_time)
 
     msg = input()
 
